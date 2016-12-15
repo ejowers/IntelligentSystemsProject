@@ -28,46 +28,46 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <h3>
-<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h3>
+          <h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h2>
 
 <p>Many deaf and mute people in America communicate primarily through American sign language (ASL). Unfortunately, most people who are not deaf or mute do not understand sign language. This causes a communication barrier for an entire community of people. The purpose of this project is to bridge this gap. The eventual goal is to take live video of a person signing and translate it into spoken words using image processing and neural network techniques, combined with word correction and text-to-speech algorithms. This project is a simplification of this idea. Images of ASL letters are used instead of video. Arrays of these images are translated into text. This project focuses on translating technical terms used by engineers in the industry.</p>
 
-<h3>
-<a id="methods" class="anchor" href="#methods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Methods</h3>
+<h2>
+<a id="methods" class="anchor" href="#methods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Methods</h2>
 
-<p>The basic process used is as follows. An array of ASL letter images is passed into the program. Each image is processed and broken down into vectors containing a representation of each pixel. These vectors go through a neural network, which is trained to identify each sign. Once the signs have been translated, they are combined into a single word and sent through a fuzzy string search algorithm. This algorithm compares the word to a dictionary of known words using the Levenshtein distance to determine which word was likely intended.  This algorithm will also determine if the translated letters are intended to be a single word or a phrase of several words since there is no ASL sign used for a space. This should help to mitigate mistakes made by the neural network. Lastly, the translated word or phrase is printed to the screen and checked against the known result to calculate the system’s accuracy. The process is illustrated in the diagram to the left.</p>
-
-<h3>
-<a id="algorithms" class="anchor" href="#algorithms" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Algorithms</h3>
+<p>The basic process used is as follows. An array of ASL letter images is passed into the program. Each image is processed and broken down into vectors containing a representation of each pixel. These vectors go through a neural network, which is trained to identify each sign. Once the signs have been translated, they are combined into a single word and sent through a fuzzy string search algorithm. This algorithm compares the word to a dictionary of known words using the Levenshtein distance to determine which word was likely intended.  This algorithm will also determine if the translated letters are intended to be a single word or a phrase of several words since there is no ASL sign used for a space. This should help to mitigate mistakes made by the neural network. Lastly, the translated word or phrase is printed to the screen and checked against the known result to calculate the system’s accuracy.</p>
 
 <h2>
-<a id="image-processing" class="anchor" href="#image-processing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Image Processing</h2>
+<a id="algorithms" class="anchor" href="#algorithms" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Algorithms</h2>
+
+<h3>
+<a id="image-processing" class="anchor" href="#image-processing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Image Processing</h3>
 
 <p>The image processing is fairly simple. The images are taken in and resized to a set width and height of 32 pixels. Then, they are flattened. This is a built-in function in OpenCV that converts the image into a single vector of size width x height x 3, totaling 3072 values representing the rgb values for each pixel.</p>
 
-<h2>
-<a id="neural-network" class="anchor" href="#neural-network" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Neural Network</h2>
+<h3>
+<a id="neural-network" class="anchor" href="#neural-network" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Neural Network</h3>
 
 <p>The neural network has 26 possible outcomes, one for each letter of the alphabet. The neural network used is arranged with an input layer of 768 nodes, a hidden layer of 384 nodes and an output layer of 26 nodes. The output of this neural network is a vector with 26 values. All of these values will be zero, except one that will have a value of one. If the one is in the first position, the letter is “A”. If the one is on the second position, the letter is “B”, and so forth. The training dataset for the network is fairly small, so the neural network is trained 500 times with the same dataset. This project uses TensorFlow with the Keras API for the neural network.</p>
 
-<h2>
-<a id="fuzzy-string-search" class="anchor" href="#fuzzy-string-search" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fuzzy String Search</h2>
+<h3>
+<a id="fuzzy-string-search" class="anchor" href="#fuzzy-string-search" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fuzzy String Search</h3>
 
 <p>There are many fuzzy string search algorithms. This project uses FuzzyWuzzy, a python library combining the functionalities of several other libraries into a simple API. Using FuzzyWuzzy, the word provided by the neural network is compared to a dictionary of known words. The Levenshtein distance is calculated for each word and the one with the shortest distance, or highest ratio of correct letters, is chosen as the intended word.</p>
 
-<h3>
-<a id="results" class="anchor" href="#results" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results</h3>
+<h2>
+<a id="results" class="anchor" href="#results" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results</h2>
 
-<p>The results of this project were positive. The neural network achieved 100% accuracy for the training data and 65% accuracy for the test data. The program has properly translated all 36 words in the given dictionary, including some that were purposefully misspelled. In sign language, there are many signs that look very similar to each other. These are especially confusing for the neural network to differentiate. The most difficult letters to tell apart are i and j. The letter j requires movement, but since this program uses images, i and j look identical. The other letters that are easily confused are a, m, n, s, and t because they are all a variation of a closed fist. This is where the fuzzy string search algorithm is especially useful. A simplified confusion matrix is shown on the right. Many letters are never confused because they are unique compared to the other letter’s signs.</p>
+<p>The results of this project were positive. The neural network achieved 100% accuracy for the training data and 65% accuracy for the test data. The program has properly translated all 36 words in the given dictionary, including some that were purposefully misspelled. In sign language, there are many signs that look very similar to each other. These are especially confusing for the neural network to differentiate. The most difficult letters to tell apart are i and j. The letter j requires movement, but since this program uses images, i and j look identical. The other letters that are easily confused are a, m, n, s, and t because they are all a variation of a closed fist. This is where the fuzzy string search algorithm is especially useful. Many letters are never confused because they are unique compared to the other letter’s signs.</p>
 
-<h3>
-<a id="future-work" class="anchor" href="#future-work" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Future Work</h3>
+<h2>
+<a id="future-work" class="anchor" href="#future-work" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Future Work</h2>
 
 <p>This project is a step towards bridging the communication barrier between the ASL community and the non-ASL community, but it is only a small part of the eventual goal. First, datasets need to be obtained. Different people sign differently, so a larger set of signing images and videos are needed to fully train this neural network. Then, live video will replace the image arrays and the text-to-speech portion will be added onto the end of the process. Lastly, the neural network will need to be expanded to handle all signs, not just letters. This step will also include expanding the dictionary of known words to include all words. This will require a much bigger network and a higher level of fluency in American Sign Language. </p>
 
-<h3>
-<a id="references--libraries" class="anchor" href="#references--libraries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>References &amp; Libraries</h3>
+<h2>
+<a id="references--libraries" class="anchor" href="#references--libraries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>References &amp; Libraries</h2>
 
 <ol>
 <li>PyImageSearch blog by Adrian Rosebrock for tutorials on computer vision and neural network software and techniques</li>
@@ -84,8 +84,8 @@
 <li>Atom</li>
 </ol>
 
-<h3>
-<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contact</h3>
+<h2>
+<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contact</h2>
 
 <p>Emily Jowers
 Email: <a href="mailto:emi.jowers@gmail.com">emi.jowers@gmail.com</a></p>
