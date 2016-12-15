@@ -1,4 +1,4 @@
-# IntelligentSystemsProject
+# Sign-to-Speech
 Sign Language translator using a neural network completed as a project for my Intelligent Systems class.
 
 The running demo is the file sign-to-speech_demo.py.To run it, cd into the file's directory, then use the following command:
