@@ -1,6 +1,8 @@
 # Sign-to-Speech
 Sign Language translator using a neural network completed as a project for my Intelligent Systems class.
 
+View Github Pages site here: https://ejowers.github.io/Sign-to-Speech/
+
 The running demo is the file sign-to-speech_demo.py.To run it, cd into the file's directory, then use the following command:
 
 python sign-to-speech_demo.py --training_set train
